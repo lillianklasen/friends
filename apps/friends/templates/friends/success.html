@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Success Page</title>
+</head>
+<body>
+<h1>Success! Welcome, {{ request.session.first_name }}</h1>
+
+<a href='/logout'>Logout</a>
+
+<h2>Potential Friends</h2>
+{% for user in users %}
+<p> {{ user.first_name }} {{ user.last_name }} </p>
+<form action='/add-friend/{{ user.id }}' method='post'>
+    {% csrf_token %}
+    <input type='submit' value='Add Friend'>
+</form>
+{% endfor %}
+
+<h2>My Friends</h2>
+{% for friend in friends %}
+<p>{{ friend.first_name}} {{ friend.last_name }}</p>
+<form action='/remove-friend/{{ friend.id }}' method='post'>
+    {% csrf_token %}
+    <input type='submit' value='Remove Friend'>
+</form>
+{% endfor %}
+
+</body>
+</html>
